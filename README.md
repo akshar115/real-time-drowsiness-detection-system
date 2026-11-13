@@ -36,18 +36,21 @@ Using standard Python `pip`:
 
 ## Training the Models
 
-1. Download the **Kaggle Drowsiness Dataset** which contains 4 classes (`Closed`, `Open`, `Yawn`, `no_yawn`).
-2. Split the dataset into two directories for training:
-   - `dataset/eye_data/` containing two subfolders: `Closed/` and `Open/`
-   - `dataset/mouth_data/` containing two subfolders: `no_yawn/` and `Yawn/`
-3. Run the training script:
-   ```bash
-   python train.py --eye_dir path/to/eye_data --mouth_dir path/to/mouth_data
-   ```
-   By default, this trains MobileNetV2-based classifiers. If you want to train a custom CNN from scratch instead, add the `--model_type` flag:
-   ```bash
-   python train.py --eye_dir path/to/eye_data --mouth_dir path/to/mouth_data --model_type custom_cnn
-   ```
+The full dataset (2,900 images) is included directly in this repository:
+- `dataset/eye_data/` containing `Closed/` and `Open/`
+- `dataset/mouth_data/` containing `no_yawn/` and `yawn/`
+
+Run the training script for any architecture:
+```bash
+# MobileNetV3 (Next-Gen Attention)
+python train.py --eye_dir dataset/eye_data --mouth_dir dataset/mouth_data --model_type mobilenet_v3
+
+# MobileNetV2 (Edge Baseline)
+python train.py --eye_dir dataset/eye_data --mouth_dir dataset/mouth_data --model_type mobilenet
+
+# Custom CNN (Scratch-built)
+python train.py --eye_dir dataset/eye_data --mouth_dir dataset/mouth_data --model_type custom_cnn
+```
    This will save `eye_model_custom_cnn.h5` and `mouth_model_custom_cnn.h5` into the `model/` directory.
 
 ## Running the App
