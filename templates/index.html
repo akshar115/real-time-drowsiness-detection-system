@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Drowsiness Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Drowsiness Detection AI</h1>
+            <div id="status-badge" class="badge alert">ALERT</div>
+        </header>
+        
+        <main class="grid-container">
+            <div class="video-section card">
+                <h2>Live Camera Feed</h2>
+                <div class="video-wrapper">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div id="camera-overlay" class="overlay">Initializing Webcam...</div>
+                </div>
+            </div>
+            
+            <div class="metrics-section card">
+                <h2>Real-Time Metrics</h2>
+                
+                <div class="meter-container">
+                    <div class="circular-progress">
+                        <div class="value-container">0%</div>
+                    </div>
+                    <p class="meter-label">Drowsiness Level</p>
+                </div>
+                
+                <div class="metric-row">
+                    <span class="metric-name">EAR (Eye Aspect Ratio):</span>
+                    <span class="metric-value" id="ear-value">0.000</span>
+                </div>
+                
+                <div class="bars-container">
+                    <div class="bar-group">
+                        <div class="bar-header">
+                            <span>Eye Close Confidence</span>
+                            <span id="eye-score-val">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="eye-score-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar-header">
+                            <span>Yawn Confidence</span>
+                            <span id="mouth-score-val">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="mouth-score-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-section card">
+                <h2>Session Stats</h2>
+                <div class="stat-box">
+                    <h3>Duration</h3>
+                    <p id="stat-duration">00:00:00</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Drowsy Alerts</h3>
+                    <p id="stat-alerts" class="text-red">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Yawn Alerts</h3>
+                    <p id="stat-yawns" class="text-orange">0</p>
+                </div>
+            </div>
+            
+            <div class="controls-section card" style="grid-column: 1 / -1; display: flex; gap: 20px; align-items: center; justify-content: center;">
+                <div>
+                    <label for="model-select" style="color: var(--text-muted); text-transform: uppercase; font-size: 12px; margin-right: 10px;">Architecture:</label>
+                    <select id="model-select" style="background: var(--bg-dark); color: white; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; cursor: pointer;">
+                        <option value="custom_cnn">Custom CNN (Fast)</option>
+                        <option value="mobilenet">MobileNetV2 (Accurate)</option>
+                        <option value="mobilenet_v3">MobileNetV3 (Next-Gen Attention)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="image-upload" style="color: var(--text-muted); text-transform: uppercase; font-size: 12px; margin-right: 10px; margin-left: 20px;">Test Photo:</label>
+                    <input type="file" id="image-upload" accept="image/*" style="background: var(--bg-dark); color: white; border: 1px solid #333; padding: 6px 12px; border-radius: 8px; cursor: pointer;">
+                    <button id="clear-image" style="display: none; background: var(--drowsy-red); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; margin-left: 10px; font-weight: bold;">Clear Photo</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Audio element for alarm -->
+    <audio id="alarm-sound" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=classic-alarm-995.mp3" preload="auto"></audio>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

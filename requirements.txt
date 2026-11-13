@@ -1,0 +1,7 @@
+flask
+tensorflow==2.15.0
+opencv-python
+mediapipe==0.10.14
+numpy
+pillow
+scikit-learn
